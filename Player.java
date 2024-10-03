@@ -16,12 +16,27 @@ public class Player {
 
     private int gold;
     private int atk, con, def, dex, wis, str;
-
+    private String[] mainStats, allStats;
+    
     public Player(String n, String t){
         equipments = new Equipment[6];
+        mainStats = new String[3];
+        allStats = new String[6];
+
         exp = 0;
         level = 0;
         name = n;
+        type = t;
+
+        str = 20 ;
+        con = 30 ;
+        dex = 10 ;
+        wis = 20 ;
+
+        determineStats();
+
+        atk = str ;
+        def = con ;
     }
 
     public String getName(){
@@ -80,43 +95,63 @@ public class Player {
         System.out.println("You have leveled up!");
         System.out.println("You are now: Level " + level );
         
-
     }
 
     public void equipItem(Equipment e){
         if (level >= e.getLevel()){
-        switch(e.getType()){
-            case "HEAD":
-            equipments[0] = e;
-            break;
+            switch(e.getType()){
+                case "HEAD":
+                    equipments[0] = e;
+                break;
 
-            case "CHEST":
-            equipments[1] = e;
+                case "CHEST":
+                    equipments[1] = e;
 
-            break;
+                break;
 
-            case "GLOVES":
-            equipments[2] = e;
+                case "GLOVES":
+                    equipments[2] = e;
 
-            break;
+                break;
 
-            case "LEGGINGS":
-            equipments[3] = e;
-            break;
+                case "LEGGINGS":
+                    equipments[3] = e;
+                break;
 
-            default:
-            if (equipments[4] == null)
-                equipments[4] = e;
-            else
-                equipments[5] = e;
+                default:
+                if (equipments[4] == null)
+                    equipments[4] = e;
+                else
+                    equipments[5] = e;
 
-            break;
-        }
+                break;
+            }
     }
     else {
         System.out.print("Your level is too low for " + e.getName());
         System.out.print("Required level for " + e.getName() + " is Level " + e.getLevel());
 
     }
+    }
+    private void determineStats(){
+        switch(type){
+            case "Warrior":
+                str *= 2 ;
+                con *= 3 ;
+                
+                mainStats[0] = "str";
+            
+            break;
+
+            case "Rogue":
+                str *= 3 ;
+                dex *= 3 ;
+            break;
+
+            case "Mage":
+                dex *= 2 ;
+                wis *= 5;
+            break;
+        }
     }
 }
